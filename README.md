@@ -8,15 +8,16 @@ Here's the proofread and improved README:
 
 In this assignment you will fine-tune a pretrained ResNet18 on the CIFAR100 dataset using **zero-order (gradient-free) optimization** — i.e. without computing any gradients. Your optimizer may only query the model as a black box, receiving scalar loss values in return.
 
-The total compute budget is fixed in terms of **samples**: you get exactly `n_batches` optimizer steps, each operating on a mini-batch of size `batch_size`. The total number of samples used must not exceed **1024** (`n_batches × batch_size ≤ 1024`). Choose your split wisely — more steps means finer updates, larger batches means less noisy loss estimates.
+The total compute budget is fixed in terms of **samples**: you get exactly `n_batches` optimizer steps, each operating on a mini-batch of size `batch_size`. The total number of samples used must not exceed **8192** (`n_batches × batch_size ≤ 8192`). Choose your split wisely — more steps means finer updates, larger batches means less noisy loss estimates.
 
 You are free to edit the following files:
 
 - `zo_optimizer.py`
 - `head_init.py`
 - `augmentation.py`
+- `train_data.py`
 
-You may also control which training samples are used — you can select a fixed subset, sample randomly from CIFAR100, or even generate synthetic data.
+You may control which training samples are used — you can select a fixed subset, sample randomly from CIFAR100, or even generate synthetic data.
 
 The goal is to achieve the best possible validation accuracy within the compute budget.
 
@@ -42,7 +43,7 @@ python validate.py \
 
 CIFAR100 will be downloaded automatically to `--data_dir` on the first run.
 
-> **Compute budget constraint:** `n_batches × batch_size` must not exceed **1024**. `validate.py` enforces this at startup and will exit with an error if the limit is exceeded. Valid combinations include `32 × 32`, `64 × 16`, or `128 × 8`. Consider the trade-off: more batches allow more optimizer steps, larger batches reduce gradient estimate noise.
+> **Compute budget constraint:** `n_batches × batch_size` must not exceed **8192**. `validate.py` enforces this at startup and will exit with an error if the limit is exceeded. Valid combinations include `32 × 32`, `64 × 16`, or `128 × 8`. Consider the trade-off: more batches allow more optimizer steps, larger batches reduce gradient estimate noise.
 
 ---
 
